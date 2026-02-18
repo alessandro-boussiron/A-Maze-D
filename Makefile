@@ -19,7 +19,9 @@ LIB	=	./lib/libmy.a
 
 SRCF		=	src/
 
-SRC			=			\
+SRC			=	$(SRCF)init_structs.c	\
+				$(SRCF)error_returns.c	\
+				$(SRCF)parser_checks.c	\
 
 OBJ			=	$(SRC:.c=.o)
 

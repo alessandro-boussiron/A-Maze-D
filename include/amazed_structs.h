@@ -35,7 +35,6 @@ typedef struct amazed_room
 typedef struct amazed
 {
     linked_list_t *room_list;
-    amazed_room_t **rooms;
     int robots_count;
 } amazed_t;
 

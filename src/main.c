@@ -6,31 +6,99 @@
 */
 #include <unistd.h>
 #include <stddef.h>
-#include "amazed_structs.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "amazed.h"
 #include "my.h"
 
-static int is_comment(char *str)
+static int is_valid_buffer(char *buffer)
 {
-    if (!str)
-        return 0;
-    for (size_t i = 0; str[i]; i++)
-        if (str[i] == '#' && str[i + 1] != '#')
-            return 1;
+    while (*buffer) {
+        if ((*buffer < 32 || *buffer > 126) &&
+            *buffer != '\t' && *buffer != '\n' && *buffer != '\0')
+            return 0;
+        buffer++;
+    }
+    return 1;
+}
+
+static void filter_comments(char **buffer)
+{
+    char *str = NULL;
+    int is_commented = 0;
+
+    if (!buffer || !(*buffer))
+        return;
+    str = *buffer;
+    for (int i = 0; str[i]; i++) {
+        if (i == 0 && str[i] == '#' && str[i + 1] == '#')
+            return;
+        if (i != 0 && str[i] == '#')
+            is_commented += 1;
+        if (is_commented)
+            str[i] == '\0';
+    }
+}
+
+static int args_count(char **args)
+{
+    int i = 0;
+
+    for(; args[i]; i++);
+    return i;
+}
+
+static char **get_next_command(int *error)
+{
+    char *buffer = NULL;
+    char **line_args = NULL;
+    size_t buff_size = 0;
+
+    if (getline(&buffer, &buff_size, stdin) < 0 || !buffer)
+        return NULL;
+    buff_size = (size_t)my_strlen(buffer);
+    buffer[buff_size - 1] = '\0';
+    if (!(*buffer))
+        return NULL;
+    if (!is_valid_buffer(buffer))
+        return error_return(error, NULL);
+    filter_comments(&buffer);
+    line_args = my_str_to_word_array(buffer);
+    if (line_args == NULL)
+        *error = -1;
+    safe_free(buffer);
+    return line_args;
+}
+
+int process_line(amazed_t **amazed, char **inputline, int i)
+{
+    int arg_count = args_count(inputline);
+
     return 0;
 }
 
-static room_type_t get_next_room_type(char *str)
+int process_input(amazed_t **amazed)
 {
-    if (!str || str[0] != '#' || str[1] != '#')
-        return ERROR;
-    if (my_strncmp(str, "##start", 7))
-        return START;
-    if (my_strncmp(str, "##end", 5))
-        return END;
-    return CLASSIC;
+    int error = 0;
+    char **inputline = NULL;
+
+    for (int i = 0; i == 0 || inputline; i++) {
+        free_array(inputline);
+        inputline = get_next_command(&error);
+        if (!inputline || error < 0)
+            break;
+        process_line(amazed, inputline, i);
+    }
+    return (error < 0) ? 1 : 0;
 }
 
-int main(void)
+int main(int ac, char **av)
 {
+    amazed_t *amazed = init_amazed();
+
+    if (ac > 2 || av[1] || !amazed)
+        return 84;
+    if (process_input(&amazed))
+        return 84;
     return 0;
 }
