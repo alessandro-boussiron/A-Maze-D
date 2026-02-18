@@ -6,7 +6,7 @@
 */
 
 #include "../linked_list.h"
-#include "my_lib.h"
+#include "my.h"
 
 node_t *node_create(void *data)
 {

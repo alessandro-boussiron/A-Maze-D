@@ -29,17 +29,16 @@ void destroy_amazed(amazed_t *self)
     if (!self)
         return;
     if (self->room_list)
-        self->room_list->destroy(self->room_list);
+        self->room_list->destroy(&self->room_list);
     safe_free(self);
 }
 
-// Replace room = NULL by rooms = linked_list_create() | recheck if !rooms
 amazed_t *init_amazed(void)
 {
     amazed_t *amazed = malloc(sizeof(amazed));
-    linked_list_t *rooms = NULL;
+    linked_list_t *rooms = linked_list_create();
 
-    if (!amazed)
+    if (!amazed || !rooms)
         return NULL;
     amazed->robots_count = 0;
     amazed->room_list = rooms;

@@ -4,7 +4,7 @@
 ** File description:
 ** add a node by index
 */
-#include "../../node_cd.h"
+#include "../node_cd.h"
 #include <stdio.h>
 
 //printf("tail(\"%s\") was define at index %lu\n", ll->tail->data, index);

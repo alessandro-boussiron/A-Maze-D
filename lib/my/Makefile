@@ -2,7 +2,7 @@
 ## EPITECH PROJECT, 2026
 ## G-PSU-200-MPL-2-1-minishell1-6
 ## File description:
-## Makefile for my_lib
+## Makefile for my
 ##
 
 HEADER		=	my.h
@@ -36,6 +36,6 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(UP)$(NAME)
+	$(RM) $(LIB)$(NAME)
 
 re:	fclean all

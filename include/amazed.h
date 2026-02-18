@@ -7,7 +7,7 @@
 
 #ifndef AMAZED_H_
     #define AMAZED_H_
-    #include "linked_lists.h"
+    #include "linked_list.h"
     #include "amazed_structs.h"
 
 amazed_t *init_amazed(void);
@@ -15,5 +15,8 @@ void destroy_amazed(amazed_t *self);
 void safe_free(void *ptr);
 void free_array(char **arr);
 void *error_return(int *error, void *ptr);
+
+int is_comment(char *str);
+room_type_t get_next_room_type(char *str);
 
 #endif /* !AMAZED_H_ */

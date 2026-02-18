@@ -10,12 +10,13 @@ ifdef CICD
 	CFLAGS		=	-Wall -Wextra $(INCLUDE)
 else
 	CC			=	epiclang
-	CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE)
+	CFLAGS		=	-Wall -Wextra $(INCLUDE)
 endif
 
 INCLUDE		=	-I./include/
 
-LIB	=	./lib/libmy.a
+LIB	=	./lib/libmy.a	\
+		./lib/ll.a
 
 SRCF		=	src/
 
@@ -37,7 +38,8 @@ TEST_FLAGS	=	--coverage -lcriterion
 all:		$(NAME)
 
 $(NAME): $(OBJ)
-	make -f Makefile -C ./lib/my/ all re
+	make -f Makefile -C ./lib/my/ re
+	make -f Makefile -C ./lib/linked_list/ re
 	$(CC) $(SRC) $(MAIN) $(LIB) $(CFLAGS) -o $(NAME)
 
 %o:			%.c
@@ -45,10 +47,12 @@ $(NAME): $(OBJ)
 
 clean:
 	make -f Makefile -C ./lib/my/ clean
+	make -f Makefile -C ./lib/linked_list/ clean
 	$(RM) $(OBJ)
 
 fclean:		clean
 	make -f Makefile -C ./lib/my/ fclean
+	make -f Makefile -C ./lib/linked_list/ fclean
 	$(RM) $(NAME)
 
 re:			fclean all

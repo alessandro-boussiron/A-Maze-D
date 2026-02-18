@@ -7,7 +7,7 @@
 
 #ifndef AMAZED_STRUCTS_H_
     #define AMAZED_STRUCTS_H_
-    #include "linked_lists.h"
+    #include "linked_list.h"
 
 typedef struct coordinates
 {

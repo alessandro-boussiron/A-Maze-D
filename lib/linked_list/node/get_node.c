@@ -4,7 +4,7 @@
 ** File description:
 ** get a node data
 */
-#include "../../linked_list.h"
+#include "../linked_list.h"
 
 static void *get_node_data(linked_list_t *ll, size_t index)
 {

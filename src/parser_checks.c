@@ -8,7 +8,7 @@
 #include "my.h"
 #include "amazed.h"
 
-static int is_comment(char *str)
+int is_comment(char *str)
 {
     if (!str)
         return 0;
@@ -18,7 +18,7 @@ static int is_comment(char *str)
     return 0;
 }
 
-static room_type_t get_next_room_type(char *str)
+room_type_t get_next_room_type(char *str)
 {
     if (!str || str[0] != '#' || str[1] != '#')
         return ERROR;

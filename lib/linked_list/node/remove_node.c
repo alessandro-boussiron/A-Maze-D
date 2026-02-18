@@ -4,7 +4,7 @@
 ** File description:
 ** remove a node by index
 */
-#include "../../node_cd.h"
+#include "../node_cd.h"
 
 static void parse_ll_to_index(node_t **prev, node_t **temp, size_t index)
 {

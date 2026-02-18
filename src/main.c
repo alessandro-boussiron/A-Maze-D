@@ -36,7 +36,7 @@ static void filter_comments(char **buffer)
         if (i != 0 && str[i] == '#')
             is_commented += 1;
         if (is_commented)
-            str[i] == '\0';
+            str[i] = '\0';
     }
 }
 
@@ -44,7 +44,7 @@ static int args_count(char **args)
 {
     int i = 0;
 
-    for(; args[i]; i++);
+    for (; args[i]; i++);
     return i;
 }
 
@@ -70,10 +70,17 @@ static char **get_next_command(int *error)
     return line_args;
 }
 
-int process_line(amazed_t **amazed, char **inputline, int i)
+//placeholder values
+int process_line(amazed_t **amazed, char **inputline)
 {
     int arg_count = args_count(inputline);
+    amazed_t **f = amazed;
 
+    amazed = f;
+    if (is_comment(inputline[0]))
+        return 0;
+    if (arg_count == 1)
+        return 0;
     return 0;
 }
 
@@ -87,7 +94,7 @@ int process_input(amazed_t **amazed)
         inputline = get_next_command(&error);
         if (!inputline || error < 0)
             break;
-        process_line(amazed, inputline, i);
+        process_line(amazed, inputline);
     }
     return (error < 0) ? 1 : 0;
 }

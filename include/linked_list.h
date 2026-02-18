@@ -40,5 +40,6 @@ typedef struct ll
     void (*clear)(struct ll *self);
     void (*destroy)(struct ll **self);
 } linked_list_t;
+
 linked_list_t *linked_list_create(void);
 #endif // LINKED_LIST_H

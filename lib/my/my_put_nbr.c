@@ -5,10 +5,20 @@
 ** task01 of Day03
 */
 #include <unistd.h>
+#include "my.h"
 
 static int my_putchar(char c)
 {
     return write(1, &c, 1);
+}
+
+int my_putstr(char *str)
+{
+    if (!str)
+        return -1;
+    if (write(1, str, my_strlen(str) ) < my_strlen(str))
+        return -1;
+    return 0;
 }
 
 int my_put_nbr(int nb)
