@@ -1,4 +1,4 @@
-name: Build
+name: Compilation Test - Bin build & CS
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-bin:
 
     runs-on: ubuntu-latest
 
@@ -21,3 +21,16 @@ jobs:
       run: make fclean
     - name: makere
       run: make CICD=1 re
+
+  build-coding-style:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Copy Dockerfile inside root
+      run : cp ./.github/Dockerfile ./Dockerfile
+    - name: Build coding-style tests
+      run: docker build . -t cs-test --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Run basic command
+      run : docker run cs-test:latest
