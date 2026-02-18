@@ -30,4 +30,5 @@ typedef struct ll {
 } linked_list_t;
 
 linked_list_t *linked_list_create(void);
+
 #endif // LINKED_LIST_H

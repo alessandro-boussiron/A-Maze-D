@@ -7,8 +7,9 @@
 #include <unistd.h>
 #include <stddef.h>
 #include "amazed_structs.h"
+#include "my.h"
 
-static int is_comment(char *str) 
+static int is_comment(char *str)
 {
     if (!str)
         return 0;
@@ -18,7 +19,7 @@ static int is_comment(char *str)
     return 0;
 }
 
-static room_type_t get_next_room_type(char *str) 
+static room_type_t get_next_room_type(char *str)
 {
     if (!str || str[0] != '#' || str[1] != '#')
         return ERROR;

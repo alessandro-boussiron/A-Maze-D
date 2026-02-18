@@ -1,0 +1,22 @@
+name: Test coding-style
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Copy Dockerfile inside root
+      run : cp ./.github/Dockerfile ./Dockerfile
+    - name: Build coding-style tests
+      run: docker build . -t cs-test --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Run basic command
+      run : docker run cs-test:latest

@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: make
+      run: make CICD=1
+    - name: make clean
+      run: make clean
+    - name: make fclean
+      run: make fclean
+    - name: makere
+      run: make CICD=1 re
