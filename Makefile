@@ -15,8 +15,6 @@ endif
 
 INCLUDE		=	-I./include/
 
-CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE)
-
 LIB	=	./lib/libmy.a
 
 SRCF		=	src/
