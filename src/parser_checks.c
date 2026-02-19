@@ -12,9 +12,8 @@ int is_comment(char *str)
 {
     if (!str)
         return 0;
-    for (size_t i = 0; str[i]; i++)
-        if (str[i] == '#' && str[i + 1] != '#')
-            return 1;
+    if (str[0] == '#' && str[1] != '#')
+        return 1;
     return 0;
 }
 

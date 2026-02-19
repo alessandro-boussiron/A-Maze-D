@@ -59,7 +59,7 @@ fclean:		clean
 re:			fclean all
 
 unit_tests:
-	gcc $(TEST_FILES) $(SRC) $(INCLUDE) $(LIB) $(TEST_FLAGS) -o $(TEST_BIN)
+	clang $(TEST_FILES) $(SRC) $(INCLUDE) $(LIB) $(TEST_FLAGS) -o $(TEST_BIN)
 
 tests_run:	unit_tests
 	$(TEST_BIN)
