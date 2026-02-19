@@ -19,4 +19,6 @@ void *error_return(int *error, void *ptr);
 int is_comment(char *str);
 room_type_t get_next_room_type(char *str);
 
+int get_robots(char **line, amazed_t **amazed);
+
 #endif /* !AMAZED_H_ */

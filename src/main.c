@@ -11,6 +11,20 @@
 #include "amazed.h"
 #include "my.h"
 
+static int is_valid_number(char *str)
+{
+    char *buffer = str;
+
+    if (!str)
+        return 0;
+    while (*buffer) {
+        if (*buffer < '0' || *buffer > '9')
+            return 0;
+        buffer++;
+    }
+    return 1;
+}
+
 static int is_valid_buffer(char *buffer)
 {
     while (*buffer) {
@@ -65,23 +79,21 @@ static char **get_next_command(int *error)
     filter_comments(&buffer);
     line_args = my_str_to_word_array(buffer);
     if (line_args == NULL)
-        *error = -1;
+        *error = 1;
     safe_free(buffer);
     return line_args;
 }
 
-//placeholder values
 int process_line(amazed_t **amazed, char **inputline)
 {
     int arg_count = args_count(inputline);
-    amazed_t **f = amazed;
 
-    amazed = f;
     if (is_comment(inputline[0]))
         return 0;
-    if (arg_count == 1)
-        return 0;
-    return 0;
+    if (arg_count == 1 && is_valid_number(inputline[0]) &&
+        (*amazed)->robots_count == 0)
+        return get_robots(inputline, amazed);
+    return 1;
 }
 
 int process_input(amazed_t **amazed)
@@ -89,14 +101,14 @@ int process_input(amazed_t **amazed)
     int error = 0;
     char **inputline = NULL;
 
-    for (int i = 0; i == 0 || inputline; i++) {
+    for (int i = 0; i == 0 || (inputline && !error); i++) {
         free_array(inputline);
         inputline = get_next_command(&error);
-        if (!inputline || error < 0)
+        if (!inputline || error)
             break;
-        process_line(amazed, inputline);
+        error = process_line(amazed, inputline);
     }
-    return (error < 0) ? 1 : 0;
+    return (error) ? 1 : 0;
 }
 
 int main(int ac, char **av)

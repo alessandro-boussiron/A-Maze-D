@@ -23,6 +23,7 @@ SRCF		=	src/
 SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)error_returns.c	\
 				$(SRCF)parser_checks.c	\
+				$(SRCF)parser.c	\
 
 OBJ			=	$(SRC:.c=.o)
 

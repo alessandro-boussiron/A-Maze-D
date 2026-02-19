@@ -17,5 +17,6 @@ int my_put_nbr(int nb);
 char **my_str_to_word_array(char const *str);
 char *nbr_str(int nb);
 int my_putstr(char *str);
+int my_getnbr(char const *str);
 
 #endif //LIB_MY_H

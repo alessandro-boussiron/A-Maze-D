@@ -30,6 +30,7 @@ typedef struct amazed_room
     char *name;
     node_t **linked_rooms;
     size_t linked_count;
+    int weight;
 } amazed_room_t;
 
 typedef struct amazed
