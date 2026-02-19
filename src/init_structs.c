@@ -35,7 +35,7 @@ void destroy_amazed(amazed_t *self)
 
 amazed_t *init_amazed(void)
 {
-    amazed_t *amazed = malloc(sizeof(amazed));
+    amazed_t *amazed = malloc(sizeof(amazed_t));
     linked_list_t *rooms = linked_list_create();
 
     if (!amazed || !rooms)
