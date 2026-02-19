@@ -60,6 +60,6 @@ jobs:
     - name: copy test file
       run: cp ./.github/test.txt ./test.txt
     - name: run valgrind
-      run: cat test.txt | valgrind --leak-check=full --show-leak-kinds=all ./
+      run: cat test.txt | valgrind --leak-check=full --show-leak-kinds=all ./amazed
     - name: clean
       run: make fclean; rm ./test.txt
