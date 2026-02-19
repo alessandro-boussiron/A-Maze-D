@@ -1,4 +1,4 @@
-name: Compilation Test - Bin build & CS
+name: Build tests
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-bin:
+
+  basic-build:
 
     runs-on: ubuntu-latest
 
@@ -22,7 +23,7 @@ jobs:
     - name: makere
       run: make CICD=1 re
 
-  build-coding-style:
+  cs-build:
 
     runs-on: ubuntu-latest
 
@@ -34,3 +35,16 @@ jobs:
       run: docker build . -t cs-test --file Dockerfile --tag my-image-name:$(date +%s)
     - name: Run basic command
       run : docker run cs-test:latest
+  
+  coverage-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Copy Dockerfile inside root
+      run : cp ./.github/Dockerfile2 ./Dockerfile
+    - name: Build coverage-style tests
+      run: docker build . -t coverage-test --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Run basic command
+      run : docker run coverage-test:latest
