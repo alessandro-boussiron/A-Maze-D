@@ -53,7 +53,7 @@ static char **size_allocation(char **array, char const *str)
         if (is_alphanum(str[i])) {
             counter++;
         }
-        if (!(is_alphanum(str[i])) && is_alphanum(str[i - 1])) {
+        if (!(is_alphanum(str[i])) && i != 0 && is_alphanum(str[i - 1])) {
             buffer = 1;
             array[tab] = string_to_array(counter, i, str);
             counter = 0;
