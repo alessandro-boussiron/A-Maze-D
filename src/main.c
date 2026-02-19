@@ -11,13 +11,6 @@
 #include "amazed.h"
 #include "my.h"
 
-static void print_table(void *data)
-{
-    amazed_room_t *feur = (amazed_room_t *)data;
-
-    printf("%s - Type : %d | Count : %d\n", feur->name, feur->type, feur->has_robot);
-}
-
 static int is_valid_number(char *str)
 {
     char *buffer = str;
@@ -126,7 +119,6 @@ int process_input(amazed_t **amazed)
             break;
         error = process_line(amazed, inputline);
     }
-    (*amazed)->room_list->dump((*amazed)->room_list, print_table);
     return (error) ? 1 : 0;
 }
 
