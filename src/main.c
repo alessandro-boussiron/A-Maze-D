@@ -11,6 +11,13 @@
 #include "amazed.h"
 #include "my.h"
 
+static void print_table(void *data)
+{
+    amazed_room_t *feur = (amazed_room_t *)data;
+
+    printf("%s - Type : %d | Count : %d\n", feur->name, feur->type, feur->has_robot);
+}
+
 static int is_valid_number(char *str)
 {
     char *buffer = str;
@@ -44,6 +51,8 @@ static void filter_comments(char **buffer)
     if (!buffer || !(*buffer))
         return;
     str = *buffer;
+    while (*str && *str == ' ')
+        str++;
     for (int i = 0; str[i]; i++) {
         if (i == 0 && str[i] == '#' && str[i + 1] == '#')
             return;
@@ -86,8 +95,11 @@ static char **get_next_command(int *error)
 
 int process_line(amazed_t **amazed, char **inputline)
 {
-    int arg_count = args_count(inputline);
+    int arg_count = 0;
 
+    if (!amazed || !inputline || !(*inputline))
+        return 1;
+    arg_count = args_count(inputline);
     if (is_comment(inputline[0]))
         return 0;
     if (arg_count == 1 && is_valid_number(inputline[0]) &&
@@ -96,6 +108,9 @@ int process_line(amazed_t **amazed, char **inputline)
     if (arg_count == 3 && is_valid_number(inputline[1]) &&
         is_valid_number(inputline[2]))
         return get_rooms(inputline, amazed);
+    if (arg_count == 1 && is_command(inputline[0]) &&
+        (*amazed)->next_room_type == CLASSIC)
+        return get_next_room_types(inputline, amazed);
     return 1;
 }
 
@@ -111,6 +126,7 @@ int process_input(amazed_t **amazed)
             break;
         error = process_line(amazed, inputline);
     }
+    (*amazed)->room_list->dump((*amazed)->room_list, print_table);
     return (error) ? 1 : 0;
 }
 
