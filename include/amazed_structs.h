@@ -31,12 +31,14 @@ typedef struct amazed_room
     node_t **linked_rooms;
     size_t linked_count;
     int weight;
+    int has_robot;
 } amazed_room_t;
 
 typedef struct amazed
 {
     linked_list_t *room_list;
     int robots_count;
+    room_type_t next_room_type;
 } amazed_t;
 
 #endif /* !AMAZED_STRUCTS_H_ */

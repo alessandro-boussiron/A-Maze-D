@@ -18,7 +18,7 @@ static int is_valid_number(char *str)
     if (!str)
         return 0;
     while (*buffer) {
-        if (*buffer < '0' || *buffer > '9')
+        if ((*buffer < '0' || *buffer > '9') && *buffer != '-')
             return 0;
         buffer++;
     }
@@ -93,6 +93,9 @@ int process_line(amazed_t **amazed, char **inputline)
     if (arg_count == 1 && is_valid_number(inputline[0]) &&
         (*amazed)->robots_count == 0)
         return get_robots(inputline, amazed);
+    if (arg_count == 3 && is_valid_number(inputline[1]) &&
+        is_valid_number(inputline[2]))
+        return get_rooms(inputline, amazed);
     return 1;
 }
 

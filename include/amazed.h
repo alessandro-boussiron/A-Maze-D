@@ -20,5 +20,8 @@ int is_comment(char *str);
 room_type_t get_next_room_type(char *str);
 
 int get_robots(char **line, amazed_t **amazed);
+int get_rooms(char **line, amazed_t **amazed);
+
+amazed_room_t *create_room(room_type_t type, char **params);
 
 #endif /* !AMAZED_H_ */

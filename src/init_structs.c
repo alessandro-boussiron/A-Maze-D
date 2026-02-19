@@ -42,5 +42,6 @@ amazed_t *init_amazed(void)
         return NULL;
     amazed->robots_count = 0;
     amazed->room_list = rooms;
+    amazed->next_room_type = CLASSIC;
     return amazed;
 }
