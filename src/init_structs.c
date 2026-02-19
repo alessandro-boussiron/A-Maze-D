@@ -37,11 +37,13 @@ amazed_t *init_amazed(void)
 {
     amazed_t *amazed = malloc(sizeof(amazed_t));
     linked_list_t *rooms = linked_list_create();
+    room_status_t status = {0, 0};
 
     if (!amazed || !rooms)
         return NULL;
     amazed->robots_count = 0;
     amazed->room_list = rooms;
     amazed->next_room_type = CLASSIC;
+    amazed->room_status = status;
     return amazed;
 }

@@ -66,6 +66,16 @@ int get_next_room_types(char **line, amazed_t **amazed)
     if (!line || !amazed)
         return 1;
     room = next_room_type(line[0]);
+    switch (room) {
+        case START:
+            (*amazed)->room_status.has_start = 1;
+            break;
+        case END:
+            (*amazed)->room_status.has_end = 1;
+            break;
+        default:
+            break;
+    }
     if (room == ERROR)
         return 1;
     (*amazed)->next_room_type = room;
