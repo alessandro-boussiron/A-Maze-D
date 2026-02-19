@@ -8,9 +8,15 @@
 ifdef CICD
 	CC			=	gcc
 	CFLAGS		=	-Wall -Wextra $(INCLUDE)
+
 else
 	CC			=	epiclang
 	CFLAGS		=	-Wall -Wextra $(INCLUDE)
+endif
+
+ifdef DEBUG
+	CFLAGS		+=	-g3
+
 endif
 
 INCLUDE		=	-I./include/

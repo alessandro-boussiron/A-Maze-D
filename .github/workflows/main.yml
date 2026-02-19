@@ -48,3 +48,18 @@ jobs:
       run: docker build . -t coverage-test --file Dockerfile --tag my-image-name:$(date +%s)
     - name: Run basic command
       run : docker run coverage-test:latest
+
+  valgrind-build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: make
+      run: make CICD=1 DEBUG=1
+    - name: copy test file
+      run: cp ./.github/test.txt ./test.txt
+    - name: run valgrind
+      run: cat test.txt | valgrind --leak-check=full --show-leak-kinds=all ./
+    - name: clean
+      run: make fclean; rm ./test.txt
