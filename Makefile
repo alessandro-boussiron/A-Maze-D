@@ -7,12 +7,11 @@
 
 ifdef CICD
 	CC			=	gcc
-	CFLAGS		=	-Wall -Wextra $(INCLUDE)
-
 else
 	CC			=	epiclang
-	CFLAGS		=	-Wall -Wextra $(INCLUDE)
 endif
+
+CFLAGS		=	-Wall -Wextra $(INCLUDE)
 
 ifdef DEBUG
 	CFLAGS		+=	-g3
