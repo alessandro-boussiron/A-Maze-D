@@ -101,13 +101,14 @@ int process_input(amazed_t **amazed)
     char **inputline = NULL;
 
     for (int i = 0; i == 0 || (inputline && !error); i++) {
-        free_array(inputline);
         inputline = get_next_command(&error);
-        if (!inputline || error)
+        if (!inputline || error) {
+            free_array(inputline);
             break;
+        }
         error = process_line(amazed, inputline);
+        free_array(inputline);
     }
-    free_array(inputline);
     return (error) ? 1 : 0;
 }
 
