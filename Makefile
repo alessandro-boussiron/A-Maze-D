@@ -65,12 +65,16 @@ fclean:		clean
 re:			fclean all
 
 unit_tests:
+	make -f Makefile -C ./lib/my/ re
+	make -f Makefile -C ./lib/linked_list/ re
 	clang $(TEST_FILES) $(SRC) $(INCLUDE) $(LIB) $(TEST_FLAGS) -o $(TEST_BIN)
 
 tests_run:	unit_tests
 	$(TEST_BIN)
 
 tests_clean: 
+	make -f Makefile -C ./lib/my/ fclean
+	make -f Makefile -C ./lib/linked_list/ fclean
 	rm -f ./unit_tests*
 
 tests_re: tests_clean tests_run
