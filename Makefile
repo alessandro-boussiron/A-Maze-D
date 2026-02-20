@@ -28,7 +28,8 @@ SRCF		=	src/
 SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)error_returns.c	\
 				$(SRCF)parser_checks.c	\
-				$(SRCF)parser.c
+				$(SRCF)parser.c			\
+				$(SRCF)link_two_rooms.c
 
 OBJ			=	$(SRC:.c=.o)
 
