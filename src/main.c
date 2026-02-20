@@ -119,6 +119,7 @@ int process_input(amazed_t **amazed)
             break;
         error = process_line(amazed, inputline);
     }
+    free_array(inputline);
     return (error) ? 1 : 0;
 }
 
