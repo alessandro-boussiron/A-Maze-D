@@ -33,6 +33,15 @@ void destroy_amazed(amazed_t *self)
     safe_free(self);
 }
 
+static void free_room(void *data)
+{
+    amazed_room_t **casted = (amazed_room_t **)data;
+
+    free((*casted)->name);
+    (*casted)->linked_rooms->destroy(&((*casted)->linked_rooms));
+    free(*casted);
+}
+
 amazed_t *init_amazed(void)
 {
     amazed_t *amazed = malloc(sizeof(amazed_t));
@@ -43,6 +52,7 @@ amazed_t *init_amazed(void)
         return NULL;
     amazed->robots_count = 0;
     amazed->room_list = rooms;
+    amazed->room_list->set_dstr(amazed->room_list, free_room);
     amazed->next_room_type = CLASSIC;
     amazed->room_status = status;
     return amazed;
