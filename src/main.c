@@ -71,11 +71,11 @@ static char **get_next_command(int *error)
     size_t buff_size = 0;
 
     if (getline(&buffer, &buff_size, stdin) < 0 || !buffer)
-        return NULL;
+        return error_return(NULL, buffer);
     buff_size = (size_t)my_strlen(buffer);
     buffer[buff_size - 1] = '\0';
     if (!(*buffer))
-        return NULL;
+        return error_return(NULL, buffer);
     if (!is_valid_buffer(buffer))
         return error_return(error, NULL);
     filter_comments(&buffer);
@@ -130,5 +130,6 @@ int main(int ac, char **av)
         return 84;
     if (process_input(&amazed))
         return 84;
+    destroy_amazed(amazed);
     return 0;
 }

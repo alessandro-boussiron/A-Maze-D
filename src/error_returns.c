@@ -13,6 +13,7 @@ void *error_return(int *error, void *ptr)
 {
     if (ptr)
         free(ptr);
-    *error = -1;
+    if (error && *error == 0)
+        *error = -1;
     return NULL;
 }
