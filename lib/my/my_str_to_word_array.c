@@ -19,9 +19,10 @@ static char *string_to_array(int counter, int i, char const *str)
     char *dest = malloc(sizeof(char) * (counter + 1));
     int start = i - counter;
 
-    for (int j = 0; j < counter; j++) {
+    if (!dest)
+        return NULL;
+    for (int j = 0; j < counter; j++)
         dest[j] = str[start + j];
-    }
     dest[counter] = '\0';
     return dest;
 }
@@ -30,11 +31,9 @@ static char **string_allocation(char **array, char const *str)
 {
     int delimiter_count = 0;
 
-    for (int i = 1; str[i] != '\0'; i++) {
-        if (!(is_alphanum(str[i])) && is_alphanum(str[i - 1])) {
+    for (int i = 1; str[i] != '\0'; i++)
+        if (!(is_alphanum(str[i])) && is_alphanum(str[i - 1]))
             delimiter_count++;
-        }
-    }
     array = malloc(sizeof(char*) * (delimiter_count + 2));
     return array;
 }
@@ -68,6 +67,10 @@ char **my_str_to_word_array(char const *str)
     char **word_array = NULL;
 
     word_array = string_allocation(word_array, str);
+    if (!word_array)
+        return NULL;
     word_array = size_allocation(word_array, str);
+    if (!word_array)
+        return NULL;
     return word_array;
 }
