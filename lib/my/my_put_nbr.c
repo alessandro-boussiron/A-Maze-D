@@ -16,7 +16,7 @@ int my_putstr(char *str)
 {
     if (!str)
         return -1;
-    if (write(1, str, my_strlen(str) ) < my_strlen(str))
+    if (write(1, str, my_strlen(str)) < my_strlen(str))
         return -1;
     return 0;
 }
