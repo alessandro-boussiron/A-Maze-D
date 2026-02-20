@@ -29,25 +29,25 @@ SRCF		=	src/
 SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)error_returns.c	\
 				$(SRCF)parser_checks.c	\
-				$(SRCF)parser.c	\
+				$(SRCF)parser.c
 
 OBJ			=	$(SRC:.c=.o)
 
 NAME		=	./amazed
 
-MAIN		=	$(SRCF)main.c		\
+MAIN		=	$(SRCF)main.c
 
-TEST_FILES	=	tests/test_amazed.c		\
+TEST_FILES	=	tests/test_amazed.c
 
 TEST_BIN	=	./unit_tests
 TEST_FLAGS	=	--coverage -lcriterion
 
 all:		$(NAME)
 
-$(NAME): $(OBJ)
-	make -f Makefile -C ./lib/my/ re
-	make -f Makefile -C ./lib/linked_list/ re
-	$(CC) $(SRC) $(MAIN) $(LIB) $(CFLAGS) -o $(NAME)
+$(NAME): $(OBJ) $(MAIN)
+	make -f Makefile -C ./lib/my/
+	make -f Makefile -C ./lib/linked_list/
+	$(CC) $^ $(LIB) $(CFLAGS) -o $@
 
 %o:			%.c
 	$(CC) $(LIB) -o $< -c $@
