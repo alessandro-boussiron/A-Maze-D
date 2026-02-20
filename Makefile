@@ -80,4 +80,4 @@ tests_clean:
 
 tests_re: tests_clean tests_run
 
-.PHONY: all clean fclean re unit_tests tests_run tests_clean tests_re
+.PHONY: all clean fclean re unit_tests tests_run tests_clean tests_re $(LIB)
