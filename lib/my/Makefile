@@ -4,6 +4,7 @@
 ## File description:
 ## Makefile for my
 ##
+CC			=	epiclang
 
 HEADER		=	my.h
 INCLUDE		=	../../include
@@ -16,7 +17,7 @@ SRC			=	my_strcmp.c				\
 				my_str_to_word_array.c	\
 				my_strncmp.c			\
 				my_nbr_to_str.c			\
-				my_getnbr.c				\
+				my_getnbr.c
 
 NAME		=	libmy.a
 

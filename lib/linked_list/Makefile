@@ -4,6 +4,7 @@
 ## File description:
 ## Makefile
 ##
+CC			=	epiclang
 
 LIB			=	../
 
@@ -18,7 +19,7 @@ SRC			=	linked_list/linked_list_clear.c	\
 				node/node_destroy.c	\
 				node/add_node.c	\
 				node/get_node.c	\
-				node/remove_node.c	\
+				node/remove_node.c
 
 NAME		=	ll.a
 
