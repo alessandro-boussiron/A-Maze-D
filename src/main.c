@@ -101,14 +101,13 @@ int process_input(amazed_t **amazed)
     char **inputline = NULL;
 
     for (int i = 0; i == 0 || (inputline && !error); i++) {
-        inputline = get_next_command(&error);
-        if (!inputline || error) {
-            free_array(inputline);
-            break;
-        }
-        error = process_line(amazed, inputline);
         free_array(inputline);
+        inputline = get_next_command(&error);
+        if (!inputline || error)
+            break;
+        error = process_line(amazed, inputline);
     }
+    free_array(inputline);
     if (!(*amazed)->room_status.has_end || !(*amazed)->room_status.has_start)
         error = 1;
     return (error) ? 1 : 0;
