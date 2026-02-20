@@ -4,3 +4,6 @@ amazed
 unit-test*
 unit_test*
 *.a
+gen.pl
+test.txt
+for_main.txt
