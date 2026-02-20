@@ -11,20 +11,6 @@
 #include "amazed.h"
 #include "my.h"
 
-static int is_valid_number(char *str)
-{
-    char *buffer = str;
-
-    if (!str)
-        return 0;
-    while (*buffer) {
-        if ((*buffer < '0' || *buffer > '9') && *buffer != '-')
-            return 0;
-        buffer++;
-    }
-    return 1;
-}
-
 static int is_valid_buffer(char *buffer)
 {
     while (*buffer) {
@@ -99,11 +85,13 @@ int process_line(amazed_t **amazed, char **inputline)
         (*amazed)->robots_count == 0)
         return get_robots(inputline, amazed);
     if (arg_count == 3 && is_valid_number(inputline[1]) &&
-        is_valid_number(inputline[2]))
+        is_valid_number(inputline[2]) && is_valid_name(inputline[0]))
         return get_rooms(inputline, amazed);
     if (arg_count == 1 && is_command(inputline[0]) &&
         (*amazed)->next_room_type == CLASSIC)
         return get_next_room_types(inputline, amazed);
+    if (arg_count == 1 && is_tunnel(inputline[0]))
+        return get_tunnel(inputline[0], amazed);
     return 1;
 }
 
