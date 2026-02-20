@@ -28,8 +28,7 @@ typedef struct amazed_room
     coordinates_t coo;
     room_type_t type;
     char *name;
-    node_t **linked_rooms;
-    size_t linked_count;
+    linked_list_t *linked_rooms;
     int weight;
     int has_robot;
 } amazed_room_t;

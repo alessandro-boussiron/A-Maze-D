@@ -11,10 +11,8 @@ void node_destroy(linked_list_t *ll, node_t *node)
 {
     if (!node || !ll)
         return;
-    if (node->data) {
+    if (node->data)
         if (ll->free_node)
-            ll->free_node(node->data);
-        free(node->data);
-    }
+            ll->free_node(&node->data);
     free(node);
 }
