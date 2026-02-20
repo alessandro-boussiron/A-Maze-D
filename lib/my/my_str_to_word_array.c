@@ -65,9 +65,7 @@ static char **size_allocation(char **array, char const *str)
 
 char **my_str_to_word_array(char const *str)
 {
-    int str_size = my_strlen(str);
     char **word_array = NULL;
-    int buffer = 0;
 
     word_array = string_allocation(word_array, str);
     word_array = size_allocation(word_array, str);
