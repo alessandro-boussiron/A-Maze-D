@@ -4,7 +4,13 @@
 ## File description:
 ## Makefile
 ##
-CC			=	epiclang
+ifdef CICD
+	CC	=	gcc
+else
+	CC	=	epiclang
+endif
+
+CFLAGS		=	-Wall -Wextra
 
 LIB			=	../
 

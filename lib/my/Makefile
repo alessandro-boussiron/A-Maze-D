@@ -4,7 +4,13 @@
 ## File description:
 ## Makefile for my
 ##
-CC			=	epiclang
+ifdef CICD
+	CC	=	gcc
+else
+	CC	=	epiclang
+endif
+
+CFLAGS		=	-Wall -Wextra
 
 HEADER		=	my.h
 INCLUDE		=	../../include
