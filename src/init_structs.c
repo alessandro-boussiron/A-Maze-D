@@ -30,6 +30,8 @@ void destroy_amazed(amazed_t *self)
         return;
     if (self->room_list)
         self->room_list->destroy(&self->room_list);
+    if (self->parsed_tunnels)
+        self->parsed_tunnels->destroy(&self->parsed_tunnels);
     safe_free(self);
 }
 
