@@ -87,6 +87,5 @@ int set_weight(amazed_t *amazed)
         return ERROR_CODE;
     }
     safe_free(queue);
-    printf("end is : %s\n", end->name);
     return EXIT_SUCCESS;
 }
