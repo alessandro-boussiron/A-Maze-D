@@ -12,4 +12,4 @@ RUN make tests_re
 
 # Cleaning and testing basic executable
 
-CMD make re ; ./amazed
+CMD make re ; cat ./.github/test.txt | ls -l ./amazed
