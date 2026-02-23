@@ -27,4 +27,6 @@ int link_two_rooms(linked_list_t *ll, char *roomname1, char *roomname2);
 
 amazed_room_t *create_room(room_type_t type, char **params, int robots_count);
 
+int set_weight(amazed_t *amazed);
+
 #endif /* !AMAZED_H_ */
