@@ -126,12 +126,14 @@ int process_input(amazed_t **amazed)
 int main(int ac, char **av)
 {
     amazed_t *amazed = init_amazed();
-    int err = EXIT_SUCCESS;
 
     if (ac > 2 || av[1] || !amazed)
         return 84;
-    if (process_input(&amazed))
-        err = 84;
+    if (process_input(&amazed)) {
+        destroy_amazed(amazed);
+        return ERROR_CODE;
+    }
+    set_weight(amazed);
     destroy_amazed(amazed);
-    return err;
+    return EXIT_SUCCESS;
 }
