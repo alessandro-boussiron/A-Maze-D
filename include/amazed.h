@@ -29,6 +29,7 @@ int get_tunnel(char *line, amazed_t **amazed);
 int get_next_room_types(char **line, amazed_t **amazed);
 int link_two_rooms(linked_list_t *ll, char *roomname1, char *roomname2);
 
+void dump_parsed_processes(amazed_t **amazed);
 amazed_room_t *create_room(room_type_t type, char **params, int robots_count);
 
 #endif /* !AMAZED_H_ */
