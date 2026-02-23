@@ -75,7 +75,7 @@ amazed_room_t *create_room(room_type_t type, char **params, int robots_count)
     room->coo = coo;
     room->has_robot = (type == START) ? robots_count : 0;
     room->type = type;
-    room->weight = 0;
+    room->weight = -1;
     room->linked_rooms = linked_rooms;
     return room;
 }
