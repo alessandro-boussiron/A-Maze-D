@@ -26,16 +26,23 @@ room_type_t next_room_type(char *str)
 int get_tunnel(char *line, amazed_t **amazed)
 {
     char *name = line;
+    char *buffer = NULL;
 
     if (!line || !amazed || !(*amazed))
         return 1;
+    buffer = my_strdup(line);
     while (*line && *line != '-')
         line++;
     if (*line == '-') {
         *line = '\0';
         line++;
     }
-    return link_two_rooms((*amazed)->room_list, name, line);
+    if (link_two_rooms((*amazed)->room_list, name, line)) {
+        safe_free(buffer);
+        return 1;
+    }
+    PUSH_END((*amazed)->parsed_tunnels, buffer);
+    return 0;
 }
 
 int get_robots(char **line, amazed_t **amazed)

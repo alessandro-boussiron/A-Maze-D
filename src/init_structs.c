@@ -46,6 +46,7 @@ amazed_t *init_amazed(void)
 {
     amazed_t *amazed = malloc(sizeof(amazed_t));
     linked_list_t *rooms = linked_list_create();
+    linked_list_t *tunnels = linked_list_create();
     room_status_t status = {0, 0};
 
     if (!amazed || !rooms)
@@ -55,6 +56,8 @@ amazed_t *init_amazed(void)
     amazed->room_list->set_dstr(amazed->room_list, free_room);
     amazed->next_room_type = CLASSIC;
     amazed->room_status = status;
+    amazed->parsed_tunnels = tunnels;
+    amazed->parsed_tunnels->set_dstr(amazed->parsed_tunnels, safe_free);
     return amazed;
 }
 
