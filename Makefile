@@ -30,9 +30,10 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)parser_checks.c	\
 				$(SRCF)parser.c			\
 				$(SRCF)link_two_rooms.c	\
-				$(SRCF)set_weight.c
+				$(SRCF)find_end_room.c	\
 				$(SRCF)prints.c			\
-				$(SRCF)set_weight.c
+				$(SRCF)set_weight.c		\
+				$(SRCF)check_integrity.c\
 
 OBJ			=	$(SRC:.c=.o)
 

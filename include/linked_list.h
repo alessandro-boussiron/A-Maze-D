@@ -34,12 +34,15 @@ typedef struct ll
     void *(*get)(struct ll *self, size_t index);
     void (*set_dstr)(struct ll *self, void (*free_node)(void *data));
     void (*apply)(struct ll *self, void (*applier)(void *data));
+    void *(*biggest)(struct ll *self, int (*algo)(void *data));
+    void *(*lowest)(struct ll *self, int (*algo)(void *data));
     void *(*search)(struct ll *self, int (*algo)(void *data, void *to_find),
+        void *to_find);
+    int (*search_nb)(struct ll *self, int (*algo)(void *data, void *to_find),
         void *to_find);
     void (*dump)(struct ll *self, void (*dump_node)(void *data));
     void (*clear)(struct ll *self);
     void (*destroy)(struct ll **self);
 } linked_list_t;
-
 linked_list_t *linked_list_create(void);
 #endif // LINKED_LIST_H
