@@ -10,6 +10,7 @@
     #define ERROR_CODE (int)(84)
 
 char *my_strdup(const char *src);
+char *my_strndup(const char *src, int n);
 int my_strlen(const char *str);
 int my_strcmp(char const *s1, char const *s2);
 int my_strncmp(char const *s1, char const *s2, int n);
