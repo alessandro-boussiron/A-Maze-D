@@ -119,7 +119,7 @@ int main(int ac, char **av)
     amazed_t *amazed = init_amazed();
     int err = EXIT_SUCCESS;
 
-    if (ac > 2 || av[1] || !amazed)
+    if (ac > 1 || av[1] || !amazed)
         return 84;
     if (process_input(&amazed))
         err = 84;
