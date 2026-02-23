@@ -58,11 +58,27 @@ int get_robots(char **line, amazed_t **amazed)
     return 0;
 }
 
+static int is_coordinates(void *data, void *to_find)
+{
+    coordinates_t *coo = (coordinates_t *)to_find;
+    amazed_room_t *room = (amazed_room_t *)data;
+
+    if (coo->x == room->coo.x && coo->y == room->coo.y)
+        return 1;
+    return 0;
+}
+
 int get_rooms(char **line, amazed_t **amazed)
 {
     amazed_room_t *room = NULL;
+    coordinates_t coo = {0, 0};
 
     if (!line || !amazed)
+        return 1;
+    coo.x = my_getnbr(line[1]);
+    coo.y = my_getnbr(line[2]);
+    if ((*amazed)->room_list->search(
+            (*amazed)->room_list, is_coordinates, &coo))
         return 1;
     room = create_room((*amazed)->next_room_type, line,
         (*amazed)->robots_count);
