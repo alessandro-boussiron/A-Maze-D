@@ -43,7 +43,8 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)find_end_room.c	\
 				$(SRCF)check_integrity.c\
 				$(SRCF)link_two_rooms.c \
-				$(SRCF)print_robot_move.c
+				$(SRCF)print_robot_move.c	\
+				$(SRCF)next_gen.c			\
 
 OBJ			=	$(SRC:.c=.o)
 
