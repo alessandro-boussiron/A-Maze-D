@@ -30,7 +30,8 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)parser_checks.c	\
 				$(SRCF)parser.c			\
 				$(SRCF)link_two_rooms.c \
-				$(SRCF)print_robot_move.c
+				$(SRCF)print_robot_move.c	\
+				$(SRCF)next_gen.c			\
 
 OBJ			=	$(SRC:.c=.o)
 
