@@ -32,6 +32,8 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)link_two_rooms.c \
 				$(SRCF)print_robot_move.c	\
 				$(SRCF)next_gen.c			\
+				$(SRCF)set_weight.c   \
+				$(SRCF)prints.c			
 
 OBJ			=	$(SRC:.c=.o)
 
@@ -44,16 +46,17 @@ TEST_FILES	=	tests/test_amazed.c
 TEST_BIN	=	./unit_tests
 TEST_FLAGS	=	--coverage -lcriterion
 
-all:		$(NAME)
+all:        $(NAME)
 
-$(NAME): $(OBJ) $(MAIN)
+$(NAME): $(OBJ) $(MAIN) $(LIB)
+	$(CC) $^ $(CFLAGS) -o $@
+
+$(LIB):
 	make -f Makefile -C ./lib/my/
 	make -f Makefile -C ./lib/linked_list/
-	$(CC) $^ $(LIB) $(CFLAGS) -o $@
 
-%o:			%.c
-	$(CC) $(LIB) -o $< -c $@
-
+%o:            %.c
+	$(CC) -c $< $(CFLAGS) -o $@
 clean:
 	make -f Makefile -C ./lib/my/ clean
 	make -f Makefile -C ./lib/linked_list/ clean
@@ -80,3 +83,5 @@ tests_clean:
 	rm -f ./unit_tests*
 
 tests_re: tests_clean tests_run
+
+.PHONY: all clean fclean re unit_tests tests_run tests_clean tests_re $(LIB)

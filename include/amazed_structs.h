@@ -45,6 +45,7 @@ typedef struct amazed
     int robots_count;
     room_type_t next_room_type;
     room_status_t room_status;
+    linked_list_t *parsed_tunnels;
 } amazed_t;
 
 #endif /* !AMAZED_STRUCTS_H_ */
