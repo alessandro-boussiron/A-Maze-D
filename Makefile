@@ -32,6 +32,7 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)link_two_rooms.c	\
 				$(SRCF)set_weight.c
 				$(SRCF)prints.c			\
+				$(SRCF)set_weight.c
 
 OBJ			=	$(SRC:.c=.o)
 
