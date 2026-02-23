@@ -30,8 +30,8 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)parser_checks.c	\
 				$(SRCF)parser.c			\
 				$(SRCF)link_two_rooms.c	\
-				$(SRCF)find_end_room.c	\
 				$(SRCF)prints.c			\
+				$(SRCF)find_end_room.c	\
 				$(SRCF)set_weight.c		\
 				$(SRCF)check_integrity.c\
 
