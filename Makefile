@@ -36,6 +36,8 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)prints.c			\
 				$(SRCF)set_weight.c		\
 				$(SRCF)check_integrity.c\
+				$(SRCF)link_two_rooms.c \
+				$(SRCF)print_robot_move.c
 
 OBJ			=	$(SRC:.c=.o)
 
