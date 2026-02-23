@@ -59,7 +59,6 @@ amazed_t *init_amazed(void)
     amazed->next_room_type = CLASSIC;
     amazed->room_status = status;
     amazed->parsed_tunnels = tunnels;
-    amazed->parsed_tunnels->set_dstr(amazed->parsed_tunnels, safe_free);
     return amazed;
 }
 
