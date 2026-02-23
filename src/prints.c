@@ -39,6 +39,7 @@ static void print_room_info(void *data)
     my_put_nbr(room->coo.y);
     my_putstr("\n");
 }
+
 static void print_tunnels(void *data)
 {
     char *tunnel = (char *)data;
