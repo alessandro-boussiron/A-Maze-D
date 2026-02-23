@@ -24,6 +24,7 @@ int get_robots(char **line, amazed_t **amazed);
 int get_rooms(char **line, amazed_t **amazed);
 int get_next_room_types(char **line, amazed_t **amazed);
 int link_two_rooms(linked_list_t *ll, char *roomname1, char *roomname2);
+int print_robot_move(int robot_number, int room_number);
 
 amazed_room_t *create_room(room_type_t type, char **params, int robots_count);
 
