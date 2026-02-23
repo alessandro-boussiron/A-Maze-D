@@ -40,6 +40,8 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)print_robot_move.c	\
 				$(SRCF)next_gen.c			\
 				$(SRCF)set_weight.c			\
+				$(SRCF)find_end_room.c	\
+				$(SRCF)check_integrity.c\
 
 OBJ			=	$(SRC:.c=.o)
 
