@@ -8,18 +8,6 @@
 #include "amazed.h"
 #include <stdio.h>
 
-static int search_node_by_type(void *data, void *to_find)
-{
-    room_type_t *type_to_find = (room_type_t *)to_find;
-    amazed_room_t *curr_room = (amazed_room_t *)data;
-
-    if (!data || !to_find)
-        return 0;
-    if (curr_room->type == *type_to_find)
-        return 1;
-    return 0;
-}
-
 static void add_to_queue(amazed_room_t **queue, int *end_queue,
     amazed_room_t *room_to_add)
 {
@@ -73,19 +61,15 @@ static int start_queuing(amazed_room_t **queue, size_t nb_rooms,
 
 int set_weight(amazed_t *amazed)
 {
-    amazed_room_t *end = NULL;
-    room_type_t to_find_type = END;
+    amazed_room_t *end = get_end_room(amazed);
     amazed_room_t **queue = NULL;
+    int err = EXIT_SUCCESS;
 
-    if (!amazed || !amazed->room_list)
+    if (!amazed || !amazed->room_list || !end)
         return ERROR_CODE;
     queue = malloc(sizeof(amazed_room_t *) * amazed->room_list->size);
-    end = amazed->room_list->search(amazed->room_list, search_node_by_type,
-        &to_find_type);
-    if (start_queuing(queue, amazed->room_list->size, end)) {
-        safe_free(queue);
-        return ERROR_CODE;
-    }
+    if (start_queuing(queue, amazed->room_list->size, end))
+        err = ERROR_CODE;
     safe_free(queue);
-    return EXIT_SUCCESS;
+    return err;
 }
