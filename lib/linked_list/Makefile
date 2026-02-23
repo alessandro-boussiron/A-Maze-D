@@ -17,9 +17,12 @@ LIB			=	../
 SRC			=	linked_list/linked_list_clear.c	\
 				linked_list/linked_list_create.c	\
 				linked_list/linked_list_destroy.c	\
+				linked_list/linked_list_search_nb.c \
 				linked_list/linked_list_search.c	\
-				linked_list/linked_list_apply.c	\
-				linked_list/linked_list_dump.c	\
+				linked_list/linked_list_biggest.c	\
+				linked_list/linked_list_lowest.c	\
+				linked_list/linked_list_apply.c		\
+				linked_list/linked_list_dump.c		\
 				linked_list/linked_list_set_dstr.c	\
 				node/node_create.c	\
 				node/node_destroy.c	\

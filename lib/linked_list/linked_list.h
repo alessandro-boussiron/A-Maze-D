@@ -34,7 +34,11 @@ typedef struct ll
     void *(*get)(struct ll *self, size_t index);
     void (*set_dstr)(struct ll *self, void (*free_node)(void *data));
     void (*apply)(struct ll *self, void (*applier)(void *data));
+    void *(*biggest)(struct ll *self, int (*algo)(void *data));
+    void *(*lowest)(struct ll *self, int (*algo)(void *data));
     void *(*search)(struct ll *self, int (*algo)(void *data, void *to_find),
+        void *to_find);
+    int (*search_nb)(struct ll *self, int (*algo)(void *data, void *to_find),
         void *to_find);
     void (*dump)(struct ll *self, void (*dump_node)(void *data));
     void (*clear)(struct ll *self);
@@ -43,6 +47,10 @@ typedef struct ll
 void linked_list_dump(linked_list_t *ll, void (*dump_node)(void *data));
 void *linked_list_search(linked_list_t *ll,
     int (*algo)(void *data, void *to_find), void *to_find);
+int linked_list_search_nb(linked_list_t *ll,
+    int (*algo)(void *data, void *to_find), void *to_find);
+void *linked_list_biggest(linked_list_t *ll, int(*biggest)(void *data));
+void *linked_list_lowest(linked_list_t *ll, int(*lowest)(void *data));
 void linked_list_apply(linked_list_t *ll, void (*applier)(void *data));
 void linked_list_set_dstr(linked_list_t *ll, void (*free_node)(void *data));
 void linked_list_destroy(linked_list_t **ll);
