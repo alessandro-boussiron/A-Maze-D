@@ -120,11 +120,11 @@ int main(int ac, char **av)
 
     if (ac > 1 || av[1] || !amazed)
         return 84;
-    if (process_input(&amazed) || check_integrity(amazed) ||
-        set_weight(amazed)) {
+    if (process_input(&amazed)) {
         destroy_amazed(amazed);
         return ERROR_CODE;
     }
+    set_weight(amazed);
     destroy_amazed(amazed);
     return EXIT_SUCCESS;
 }
