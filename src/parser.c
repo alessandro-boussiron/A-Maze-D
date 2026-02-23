@@ -25,12 +25,17 @@ room_type_t next_room_type(char *str)
 
 int get_tunnel(char *line, amazed_t **amazed)
 {
-    char *name_1 = NULL;
-    char *name_2 = NULL;
+    char *name = line;
 
     if (!line || !amazed || !(*amazed))
         return 1;
-    return 0;
+    while (*line && *line != '-')
+        line++;
+    if (*line == '-') {
+        *line = '\0';
+        line++;
+    }
+    return link_two_rooms((*amazed)->room_list, name, line);
 }
 
 int get_robots(char **line, amazed_t **amazed)

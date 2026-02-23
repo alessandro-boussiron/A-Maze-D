@@ -109,6 +109,8 @@ int process_input(amazed_t **amazed)
         error = process_line(amazed, inputline);
         free_array(inputline);
     }
+    if (!(*amazed)->room_status.has_end || !(*amazed)->room_status.has_start)
+        error = 1;
     return (error) ? 1 : 0;
 }
 
