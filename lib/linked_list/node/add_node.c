@@ -7,8 +7,6 @@
 #include "../node_cd.h"
 #include <stdio.h>
 
-//printf("tail(\"%s\") was define at index %lu\n", ll->tail->data, index);
-
 static void parse_ll_to_index(node_t **prev, node_t **temp, size_t index)
 {
     for (size_t i = 0; i < index; i++) {
