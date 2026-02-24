@@ -17,5 +17,5 @@ int print_robot_move(int robot_number, int room_number)
     my_put_nbr(room_number);
     if (write(1, "\n", 1) < 0)
         return ERROR_CODE;
-    return 0;
+    return EXIT_SUCCESS;
 }

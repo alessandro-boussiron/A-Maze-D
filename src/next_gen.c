@@ -8,19 +8,48 @@
 #include "amazed.h"
 #include <unistd.h>
 
+static int bigger_weight(void *data)
+{
+    amazed_room_t *casted_data = (amazed_room_t *)data;
+
+    if (!data)
+        return 1;
+    return casted_data->weight;
+}
+
+static int move_robot(amazed_room_t *robot)
+{
+    amazed_room_t *dest = NULL;
+
+    if (!robot)
+        return ERROR_CODE;
+    dest = robot->linked_rooms->biggest(robot->linked_rooms, bigger_weight);
+    if (!dest)
+        return ERROR_CODE;
+    if (robot->weight < dest->weight && !dest->has_robot) {
+        robot->has_robot--;
+        robot = dest;
+        robot->has_robot++;
+        if (my_putstr("go to ") < 0 || my_putstr(robot->name) < 0 ||
+            my_putstr("\n") < 0)
+            return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
 int next_gen(amazed_t *amazed, linked_list_t *robots)
 {
-    int max_weight = 0;
-    int index = -1;
-    node_t *cur_room = amazed->room_list->head->data;
-    amazed_room_t *room = (amazed_room_t *)cur_room->data;
+    amazed_room_t *cur_robot_room = NULL;
 
-    if (!cur_room)
+    if (!amazed || !robots)
         return 84;
-    while (cur_room) {
-        if (room->weight == max_weight && room->has_robot == 0) {
-            my_putstr("tungtungtungsahur");
-        }
+    for (node_t *cur_robot = robots->head; cur_robot;
+        cur_robot = cur_robot->next) {
+        cur_robot_room = (amazed_room_t *)cur_robot->data;
+        if (!cur_robot_room || cur_robot_room->type == END)
+            continue;
+        if (move_robot(cur_robot_room) != 0)
+            return EXIT_FAILURE;
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
