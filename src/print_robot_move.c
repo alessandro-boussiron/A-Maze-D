@@ -9,13 +9,13 @@
 
 int print_robot_move(int robot_number, int room_number)
 {
-    if (write(1, "P", 1) < 0)
+    if (write(1, "P", 1) != 1)
         return ERROR_CODE;
     my_put_nbr(robot_number);
-    if (write(1, "-", 1) < 0)
+    if (write(1, "-", 1) != 1)
         return ERROR_CODE;
     my_put_nbr(room_number);
-    if (write(1, "\n", 1) < 0)
+    if (write(1, "\n", 1) != 1)
         return ERROR_CODE;
     return EXIT_SUCCESS;
 }
