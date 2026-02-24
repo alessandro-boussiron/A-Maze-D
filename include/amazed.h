@@ -9,7 +9,7 @@
     #define AMAZED_H_
     #include "linked_list.h"
     #include "amazed_structs.h"
-    
+
 amazed_t *init_amazed(void);
 void destroy_amazed(amazed_t *self);
 void safe_free(void *ptr);
