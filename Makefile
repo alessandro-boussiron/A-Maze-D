@@ -34,6 +34,7 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)find_end_room.c	\
 				$(SRCF)set_weight.c		\
 				$(SRCF)check_integrity.c\
+				$(SRCF)solve_maze.c		\
 
 OBJ			=	$(SRC:.c=.o)
 
