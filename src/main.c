@@ -121,7 +121,7 @@ int main(int ac, char **av)
     if (ac > 1 || av[1] || !amazed)
         return 84;
     if (process_input(&amazed) || check_integrity(amazed) ||
-        set_weight(amazed)) {
+        solve_maze(amazed)) {
         destroy_amazed(amazed);
         return ERROR_CODE;
     }
