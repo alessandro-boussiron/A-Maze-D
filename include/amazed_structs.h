@@ -39,6 +39,12 @@ typedef struct room_status
     int has_end;
 } room_status_t;
 
+typedef struct robot_s
+{
+    int serial_number;
+    amazed_room_t *room;
+} robot_t;
+
 typedef struct amazed
 {
     linked_list_t *room_list;
