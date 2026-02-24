@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** G-CPE-200-MPL-2-1-amazed-2
 ** File description:
-** find_end_room
+** find_end_start_room
 */
 #include "amazed.h"
 #include <stdio.h>
@@ -17,6 +17,18 @@ static int search_node_by_type(void *data, void *to_find)
     if (curr_room->type == *type_to_find)
         return 1;
     return 0;
+}
+
+amazed_room_t *get_start_room(amazed_t *amazed)
+{
+    room_type_t type_start = START;
+    amazed_room_t *start = NULL;
+
+    if (!amazed || !amazed->room_list)
+        return NULL;
+    start = amazed->room_list->search(amazed->room_list,
+        search_node_by_type, &type_start);
+    return start;
 }
 
 amazed_room_t *get_end_room(amazed_t *amazed)
