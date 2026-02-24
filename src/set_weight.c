@@ -56,14 +56,14 @@ static int start_queuing(amazed_room_t **queue, size_t nb_rooms,
             continue;
         process_curr_room(queue, curr_room, &end_queue);
     }
-    return EXIT_SUCCESS;
+    return SUCCESS_CODE;
 }
 
 int set_weight(amazed_t *amazed)
 {
     amazed_room_t *end = get_end_room(amazed);
     amazed_room_t **queue = NULL;
-    int err = EXIT_SUCCESS;
+    int err = SUCCESS_CODE;
 
     if (!amazed || !amazed->room_list || !end)
         return ERROR_CODE;

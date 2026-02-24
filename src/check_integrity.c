@@ -38,5 +38,5 @@ int check_integrity(amazed_t *amazed)
         search_node_by_type, &type_err);;
     if (nb_end != 1 || nb_start != 1 || nb_error)
         return ERROR_CODE;
-    return EXIT_SUCCESS;
+    return SUCCESS_CODE;
 }

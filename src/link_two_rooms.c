@@ -33,7 +33,7 @@ static int link_rooms(amazed_room_t *room1, amazed_room_t *room2)
     if (room1->linked_rooms->size <= size1 ||
         room2->linked_rooms->size <= size2)
         return ERROR_CODE;
-    return EXIT_SUCCESS;
+    return SUCCESS_CODE;
 }
 
 static int check_links(amazed_room_t *room1, amazed_room_t *room2)
@@ -50,7 +50,7 @@ static int check_links(amazed_room_t *room1, amazed_room_t *room2)
         search_node, room1->name);
     if (found)
         return ERROR_CODE;
-    return EXIT_SUCCESS;
+    return SUCCESS_CODE;
 }
 
 int link_two_rooms(linked_list_t *ll, char *roomname1, char *roomname2)
@@ -64,5 +64,5 @@ int link_two_rooms(linked_list_t *ll, char *roomname1, char *roomname2)
     room2 = ll->search(ll, search_node, roomname2);
     if (check_links(room1, room2) || link_rooms(room1, room2))
         return ERROR_CODE;
-    return EXIT_SUCCESS;
+    return SUCCESS_CODE;
 }

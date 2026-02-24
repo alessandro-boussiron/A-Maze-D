@@ -126,5 +126,5 @@ int main(int ac, char **av)
         return ERROR_CODE;
     }
     destroy_amazed(amazed);
-    return EXIT_SUCCESS;
+    return SUCCESS_CODE;
 }

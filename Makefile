@@ -32,19 +32,11 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)print_robot_move.c	\
 				$(SRCF)next_gen.c			\
 				$(SRCF)link_two_rooms.c	\
-				$(SRCF)find_end_room.c	\
 				$(SRCF)prints.c			\
+				$(SRCF)find_end_room.c	\
 				$(SRCF)set_weight.c		\
 				$(SRCF)check_integrity.c\
-				$(SRCF)link_two_rooms.c \
-				$(SRCF)print_robot_move.c	\
-				$(SRCF)next_gen.c			\
-				$(SRCF)set_weight.c			\
-				$(SRCF)find_end_room.c	\
-				$(SRCF)check_integrity.c\
-				$(SRCF)link_two_rooms.c \
-				$(SRCF)print_robot_move.c	\
-				$(SRCF)next_gen.c			\
+				$(SRCF)solve_maze.c		\
 
 OBJ			=	$(SRC:.c=.o)
 
