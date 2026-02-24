@@ -8,6 +8,7 @@
     #define LIB_MY_H
     #include <stdlib.h>
     #define ERROR_CODE (int)(84)
+    #define SUCCESS_CODE (int)(0)
 
 char *my_strdup(const char *src);
 char *my_strndup(const char *src, int n);
