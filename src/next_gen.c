@@ -38,8 +38,7 @@ static int move_robot(robot_t *robot)
         robot->room->has_robot--;
         robot->room = dest;
         robot->room->has_robot++;
-        if (my_putstr("go to ") || my_putstr(robot->room->name) ||
-            my_putstr("\n"))
+        if (print_robot_move(robot->serial_number, robot->room->name) < 0)
             return ERROR_CODE;
     }
     return SUCCESS_CODE;
