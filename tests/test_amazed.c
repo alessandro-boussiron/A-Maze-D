@@ -36,6 +36,14 @@ Test(error_returns_null, basic) {
     cr_assert(error < 0);
 }
 
+Test(error_returns_null, set_error) {
+
+    int *error = NULL;
+
+    error_return(error, NULL);
+    cr_assert_null(error);
+}
+
 Test(error_returns, basic) {
     int error = 0;
     char *feur = malloc(sizeof(char) * 4);
@@ -84,6 +92,17 @@ Test(free_array_null, basic) {
 
     free_array(feur);
     cr_assert_null(feur);
+}
+
+Test(goofy_amazed_destroy, basic) {
+    amazed_t *amazed = init_amazed();
+
+    amazed->room_list = NULL;
+    amazed->parsed_tunnels = NULL;
+    cr_assert_null(amazed->room_list);
+    cr_assert_null(amazed->parsed_tunnels);
+    destroy_amazed(amazed);
+    cr_assert_not_null(amazed);
 }
 
 Test(is_comment, basic) {
@@ -194,6 +213,7 @@ Test(get_rooms, start) {
 
     cr_assert(get_next_room_types(NULL, &amazed) == 1);
     cr_assert(get_next_room_types(feur, NULL) == 1);
+    cr_assert(get_next_room_types(NULL, NULL) == 1);
 }
 
 Test(get_rooms, end) {
@@ -211,6 +231,48 @@ Test(get_rooms, end) {
 
     cr_assert(get_next_room_types(NULL, &amazed) == 1);
     cr_assert(get_next_room_types(feur, NULL) == 1);
+}
+
+Test(next_room_type, macro_return) {
+    char feur[] = "##start";
+    char end[] = "##end";
+    char stonks[] = "iqodjzod";
+    char bonk[] = "##bonk";
+
+    cr_assert(next_room_type(NULL) == ERROR);
+    cr_assert(next_room_type(stonks) == ERROR);
+    cr_assert(next_room_type(feur) == START);
+    cr_assert(next_room_type(end) == END);
+    cr_assert(next_room_type(bonk) == CLASSIC);
+}
+
+Test(set_tunnels, basic) {
+    amazed_t *amazed = init_amazed();
+    char *feur[] = {
+        "quoicoufeur",
+        "59",
+        "48",
+        NULL,
+    };
+    char *feur2[] = {
+        "feur",
+        "70",
+        "40",
+        NULL,
+    };
+    char tunnel0[] = "quoicoufeur-feur";
+    char tunnel2[] = "quoicoufeur-";
+    char tunnel1[] = "-feur";
+    get_rooms(feur, &amazed);
+    get_rooms(feur2, &amazed);
+
+    cr_assert_not_null(amazed->room_list->head->data);
+    cr_assert(get_tunnel(tunnel0, &amazed) == 0);
+    cr_assert(get_tunnel(tunnel1, &amazed) == 1);
+    cr_assert(get_tunnel(tunnel2, &amazed) == 1);
+    cr_assert(get_tunnel(NULL, &amazed) == 1);
+    cr_assert(get_tunnel(tunnel0, NULL) == 1);
+    cr_assert(get_tunnel(NULL, NULL) == 1);
 }
 
 Test(dump_processes, basic) {
