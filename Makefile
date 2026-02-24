@@ -33,7 +33,7 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)next_gen.c			\
 				$(SRCF)link_two_rooms.c	\
 				$(SRCF)prints.c			\
-				$(SRCF)find_end_room.c	\
+				$(SRCF)find_end_start_room.c	\
 				$(SRCF)set_weight.c		\
 				$(SRCF)check_integrity.c\
 				$(SRCF)solve_maze.c		\
