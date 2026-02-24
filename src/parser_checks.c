@@ -65,6 +65,7 @@ int is_tunnel(char *str)
             buffer++;
             continue;
         }
+        return 0;
     }
     return (has_delim != 1) ? 0 : 1;
 }
