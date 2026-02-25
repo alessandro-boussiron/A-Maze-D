@@ -58,15 +58,11 @@ int link_two_rooms(linked_list_t *ll, char *roomname1, char *roomname2)
     amazed_room_t *room1 = NULL;
     amazed_room_t *room2 = NULL;
 
-    if (!ll || ll->size < 2)
+    if (!ll || ll->size < 2 || my_strcmp(roomname1, roomname2) == 0)
         return ERROR_CODE;
-    if (my_strcmp(roomname1, roomname2) == 0)
-        return SUCCESS_CODE;
     room1 = ll->search(ll, search_node, roomname1);
     room2 = ll->search(ll, search_node, roomname2);
-    if (check_links(room1, room2))
-        return SUCCESS_CODE;
-    if (link_rooms(room1, room2))
+    if (check_links(room1, room2) || link_rooms(room1, room2))
         return ERROR_CODE;
     return SUCCESS_CODE;
 }
