@@ -67,23 +67,26 @@ static int move_robot(robot_t *robot, int total_room)
         robot->room->has_robot++;
         if (print_robot_move(robot->serial_number, robot->room->name) < 0)
             return ERROR_CODE;
+        return SUCCESS_CODE;
     }
-    return SUCCESS_CODE;
+    return NO_MOVE_CODE;
 }
 
-int next_gen(amazed_t *amazed, linked_list_t *robots)
+int next_gen(amazed_t *amazed, robot_t **robots)
 {
-    robot_t *curr_robot = NULL;
+    int r = 0;
 
     if (!amazed || !robots)
         return ERROR_CODE;
-    for (node_t *cur_robot_node = robots->head; cur_robot_node;
-        cur_robot_node = cur_robot_node->next) {
-        curr_robot = (robot_t *)cur_robot_node->data;
-        if (!curr_robot || !curr_robot->room || curr_robot->room->type == END)
+    for (robot_t **curr_robot = robots; *curr_robot; curr_robot++) {
+        if (!curr_robot || !(*curr_robot)->room ||
+            (*curr_robot)->room->type == END)
             continue;
-        if (move_robot(curr_robot, amazed->room_list->size))
+        r = move_robot((*curr_robot), amazed->room_list->size);
+        if (r == ERROR_CODE)
             return ERROR_CODE;
+        if (r == NO_MOVE_CODE)
+            break;
     }
     return SUCCESS_CODE;
 }

@@ -9,6 +9,7 @@
     #define AMAZED_H_
     #include "linked_list.h"
     #include "amazed_structs.h"
+    #define NO_MOVE_CODE (int)(42)
 
 amazed_t *init_amazed(void);
 void destroy_amazed(amazed_t *self);
@@ -39,7 +40,7 @@ amazed_room_t *get_start_room(amazed_t *amazed);
 int set_weight(amazed_t *amazed);
 int check_integrity(amazed_t *amazed);
 
-int next_gen(amazed_t *amazed, linked_list_t *robots);
+int next_gen(amazed_t *amazed, robot_t **robots);
 
 int solve_maze(amazed_t *amazed);
 
