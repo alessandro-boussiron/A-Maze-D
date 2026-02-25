@@ -21,6 +21,8 @@ static int launch_robots(amazed_t *amazed, linked_list_t *robots)
             err = ERROR_CODE;
             break;
         }
+        if (my_putstr("\n") < 0)
+            return ERROR_CODE;
         curr_gen++;
     }
     return err;
@@ -58,6 +60,8 @@ static int init_robots(amazed_room_t *start, linked_list_t *robots,
     if (!robots || !start)
         return ERROR_CODE;
     start->has_robot = nb_robots;
+    if (my_putstr("#moves\n") < 0)
+        return ERROR_CODE;
     for (size_t robot_added = 0; robot_added < nb_robots; robot_added++) {
         new_robot = make_new_robot(start, robot_added + 1);
         if (!new_robot)
