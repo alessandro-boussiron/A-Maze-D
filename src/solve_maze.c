@@ -10,20 +10,18 @@
 static int launch_robots(amazed_t *amazed, linked_list_t *robots)
 {
     amazed_room_t *end = get_end_room(amazed);
-    size_t curr_gen = 0;
     int err = SUCCESS_CODE;
 
     if (!robots || !amazed || !end)
         return ERROR_CODE;
     while (end->has_robot != amazed->robots_count) {
-        if (curr_gen > 100 || next_gen(amazed, robots)) {
+        if (next_gen(amazed, robots)) {
             my_putstr("Error Occured.\n");
             err = ERROR_CODE;
             break;
         }
         if (my_putstr("\n") < 0)
             return ERROR_CODE;
-        curr_gen++;
     }
     return err;
 }
@@ -62,11 +60,11 @@ static int init_robots(amazed_room_t *start, linked_list_t *robots,
     start->has_robot = nb_robots;
     if (my_putstr("#moves\n") < 0)
         return ERROR_CODE;
-    for (size_t robot_added = 0; robot_added < nb_robots; robot_added++) {
+    for (size_t robot_added = nb_robots; robot_added > 0; robot_added--) {
         new_robot = make_new_robot(start, robot_added + 1);
         if (!new_robot)
             return ERROR_CODE;
-        PUSH_END(robots, new_robot);
+        PUSH_START(robots, new_robot);
     }
     return SUCCESS_CODE;
 }

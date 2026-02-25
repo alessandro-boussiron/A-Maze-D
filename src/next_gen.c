@@ -23,14 +23,41 @@ static int bigger_weight(void *data)
     return casted_data->weight;
 }
 
-static int move_robot(robot_t *robot)
+static int bigger_weight_anyway(void *data)
+{
+    amazed_room_t *casted_data = (amazed_room_t *)data;
+
+    if (!data)
+        return 0;
+    return casted_data->weight;
+}
+
+static amazed_room_t *get_dest(amazed_room_t *room, int room_numbers)
+{
+    amazed_room_t *dest = NULL;
+
+    if (!room || !room->linked_rooms)
+        return NULL;
+    dest = room->linked_rooms->biggest(room->linked_rooms, bigger_weight);
+    if (!dest)
+        return room;
+    if (room->has_robot >= room_numbers - dest->weight
+        || room->type != START)
+        return dest;
+    dest = room->linked_rooms->biggest(room->linked_rooms,
+        bigger_weight_anyway);
+    if (!dest || dest->has_robot)
+        return room;
+    return dest;
+}
+
+static int move_robot(robot_t *robot, int total_room)
 {
     amazed_room_t *dest = NULL;
 
     if (!robot || !robot->room || !robot->room->linked_rooms)
         return ERROR_CODE;
-    dest = robot->room->linked_rooms->biggest(robot->room->linked_rooms,
-        bigger_weight);
+    dest = get_dest(robot->room, total_room);
     if (!dest)
         return ERROR_CODE;
     if (robot->room->weight <= dest->weight && (!dest->has_robot ||
@@ -55,7 +82,7 @@ int next_gen(amazed_t *amazed, linked_list_t *robots)
         curr_robot = (robot_t *)cur_robot_node->data;
         if (!curr_robot || !curr_robot->room || curr_robot->room->type == END)
             continue;
-        if (move_robot(curr_robot))
+        if (move_robot(curr_robot, amazed->room_list->size))
             return ERROR_CODE;
     }
     return SUCCESS_CODE;
