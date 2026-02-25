@@ -29,8 +29,14 @@ SRC			=	$(SRCF)init_structs.c	\
 				$(SRCF)error_returns.c	\
 				$(SRCF)parser_checks.c	\
 				$(SRCF)parser.c			\
+				$(SRCF)print_robot_move.c	\
+				$(SRCF)next_gen.c			\
 				$(SRCF)link_two_rooms.c	\
 				$(SRCF)prints.c			\
+				$(SRCF)find_end_start_room.c	\
+				$(SRCF)set_weight.c		\
+				$(SRCF)check_integrity.c\
+				$(SRCF)solve_maze.c		\
 
 OBJ			=	$(SRC:.c=.o)
 

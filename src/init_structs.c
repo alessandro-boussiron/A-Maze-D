@@ -37,11 +37,23 @@ void destroy_amazed(amazed_t *self)
 
 static void free_room(void *data)
 {
-    amazed_room_t **casted = (amazed_room_t **)data;
+    amazed_room_t *room = (amazed_room_t *)data;
 
-    free((*casted)->name);
-    (*casted)->linked_rooms->destroy(&((*casted)->linked_rooms));
-    free(*casted);
+    if (!data || !room)
+        return;
+    free(room->name);
+    if (room->linked_rooms)
+        room->linked_rooms->destroy(&(room->linked_rooms));
+    free(room);
+}
+
+static void free_tunnel(void *data)
+{
+    char *str = (char *)data;
+
+    if (!data || !str)
+        return;
+    free(str);
 }
 
 amazed_t *init_amazed(void)
@@ -59,6 +71,7 @@ amazed_t *init_amazed(void)
     amazed->next_room_type = CLASSIC;
     amazed->room_status = status;
     amazed->parsed_tunnels = tunnels;
+    amazed->parsed_tunnels->set_dstr(amazed->parsed_tunnels, free_tunnel);
     return amazed;
 }
 

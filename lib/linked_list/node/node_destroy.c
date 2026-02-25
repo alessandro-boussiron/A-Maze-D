@@ -13,6 +13,6 @@ void node_destroy(linked_list_t *ll, node_t *node)
         return;
     if (node->data)
         if (ll->free_node)
-            ll->free_node(&node->data);
+            ll->free_node(node->data);
     free(node);
 }
