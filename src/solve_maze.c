@@ -79,7 +79,8 @@ int solve_maze(amazed_t *amazed)
     if (init_robots(start, robots, amazed->robots_count) ||
         launch_robots(amazed, robots))
         err = ERROR_CODE;
-    for (int robots_dstr = 0; robots_dstr <= amazed->robots_count; robots_dstr++)
+    for (int robots_dstr = 0; robots_dstr <= amazed->robots_count;
+        robots_dstr++)
         free(robots[robots_dstr]);
     free(robots);
     return err;
