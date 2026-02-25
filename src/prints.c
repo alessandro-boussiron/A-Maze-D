@@ -64,7 +64,7 @@ static void dump_tunnels(linked_list_t *tunnels)
 
 int dump_parsed_processes(amazed_t **amazed)
 {
-    if (!amazed)
+    if (!amazed || !(*amazed))
         return 1;
     dump_robots_count((*amazed)->robots_count);
     dump_rooms((*amazed)->room_list);

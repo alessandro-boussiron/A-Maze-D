@@ -9,6 +9,8 @@
 #include <criterion/redirect.h>
 #include "my.h"
 #include "amazed.h"
+#include <unistd.h>
+#include <fcntl.h>
 
 Test(init_destroy_amazed, basic) {
     amazed_t *feur = init_amazed();
@@ -314,4 +316,149 @@ Test(dump_processes, basic) {
     cr_assert(amazed->robots_count != 0);
     cr_assert(dump_parsed_processes(&amazed) == 0);
     cr_assert(dump_parsed_processes(NULL) == 1);
+    close(1);
+    cr_assert(dump_parsed_processes(&amazed) == 0);
+    int fd = open("/dev/tty", O_WRONLY);
+    dup2(fd, 1);
+}
+
+Test(solve_maze, basic) {
+    amazed_t *amazed = init_amazed();
+    char *feur[] = {
+        "0",
+        "59",
+        "48",
+        NULL,
+    };
+    char *feur2[] = {
+        "1",
+        "70",
+        "97",
+        NULL,
+    };
+    char *feur3[] = {
+        "2",
+        "40",
+        "10",
+        NULL,
+    };
+    char *feur4[] = {
+        "14",
+        NULL,
+    };
+    char tunnel[] = "0-1";
+    char tunnel2[] = "1-2";
+    amazed->next_room_type = END;
+    get_rooms(feur, &amazed);
+    amazed->next_room_type = START;
+    get_rooms(feur2, &amazed);
+    get_rooms(feur3, &amazed);
+    get_robots(feur4, &amazed);
+    get_tunnel(tunnel, &amazed);
+    get_tunnel(tunnel2, &amazed);
+    cr_assert_not_null(amazed->room_list->head->data);
+    cr_assert_not_null(amazed->parsed_tunnels->head->data);
+    cr_assert(amazed->robots_count != 0);
+    cr_assert(solve_maze(amazed) == 0);
+}
+
+Test(check_integrity, basic) {
+    amazed_t *amazed = init_amazed();
+    char *feur[] = {
+        "0",
+        "59",
+        "48",
+        NULL,
+    };
+    char *feur2[] = {
+        "1",
+        "70",
+        "97",
+        NULL,
+    };
+    char *feur3[] = {
+        "2",
+        "40",
+        "10",
+        NULL,
+    };
+    char *feur4[] = {
+        "14",
+        NULL,
+    };
+    char tunnel[] = "0-1";
+    char tunnel2[] = "1-2";
+    cr_assert(check_integrity(amazed));
+    amazed->next_room_type = END;
+    get_rooms(feur, &amazed);
+    get_rooms(feur2, &amazed);
+    amazed->next_room_type = START;
+    get_rooms(feur3, &amazed);
+    cr_assert(check_integrity(amazed) == 0);
+    get_robots(feur4, &amazed);
+    get_tunnel(tunnel, &amazed);
+    get_tunnel(tunnel2, &amazed);
+    cr_assert_not_null(amazed->room_list->head->data);
+    cr_assert_not_null(amazed->parsed_tunnels->head->data);
+    cr_assert(amazed->robots_count != 0);
+    cr_assert(check_integrity(amazed) == 0);
+}
+
+Test(dump_processes, null_arg) {
+    cr_assert(dump_parsed_processes(NULL));
+}
+
+Test(check_integrity, null_arg) {
+    cr_assert(check_integrity(NULL));
+}
+
+Test(solve_maze, null_arg) {
+    cr_assert(solve_maze(NULL));
+}
+
+Test(check_integrity, no_ends) {
+    amazed_t *amazed = init_amazed();
+    char *feur[] = {
+        "0",
+        "59",
+        "48",
+        NULL,
+    };
+    char *feur2[] = {
+        "1",
+        "70",
+        "97",
+        NULL,
+    };
+    char *feur3[] = {
+        "2",
+        "40",
+        "10",
+        NULL,
+    };
+    char *feur4[] = {
+        "14",
+        NULL,
+    };
+    cr_assert(check_integrity(amazed));
+    get_rooms(feur, &amazed);
+    get_rooms(feur2, &amazed);
+    amazed->next_room_type = START;
+    get_rooms(feur3, &amazed);
+    cr_assert(check_integrity(amazed));
+    get_robots(feur4, &amazed);
+    cr_assert(amazed->robots_count != 0);
+    cr_assert(check_integrity(amazed));
+}
+
+Test(print_robot_move, null_arg) {
+    cr_assert(print_robot_move(0, NULL));
+}
+
+Test(print_robot_move, basic) {
+    close(1);
+    char feur[] = "fesuifs";
+    cr_assert(print_robot_move(5, feur));
+    int fd = open("/dev/tty", O_WRONLY);
+    dup2(fd, 1);
 }
