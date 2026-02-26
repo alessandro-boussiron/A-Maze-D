@@ -452,13 +452,14 @@ Test(check_integrity, no_ends) {
 }
 
 Test(print_robot_move, null_arg) {
-    cr_assert(print_robot_move(0, NULL));
+    cr_assert(print_robot_move(0, NULL, 0));
 }
 
 Test(print_robot_move, basic) {
     close(1);
+    int i = 0;
     char feur[] = "fesuifs";
-    cr_assert(print_robot_move(5, feur));
+    cr_assert(print_robot_move(5, feur, i));
     int fd = open("/dev/tty", O_WRONLY);
     dup2(fd, 1);
 }
