@@ -20,7 +20,7 @@ jobs:
       run: make clean
     - name: make fclean
       run: make fclean
-    - name: makere
+    - name: make re
       run: make CICD=1 re
 
   cs-build:
@@ -67,3 +67,18 @@ jobs:
       run: cat test.txt | valgrind --leak-check=full --show-leak-kinds=all ./amazed
     - name: clean
       run: make fclean; rm ./test.txt
+
+  opti-tests:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: build
+      run: make CICD=1 re
+    - name: copy-test-file
+      run: cp ./.github/test_2.txt ./test.txt
+    - name: algo-time
+      run: time (cat test.txt | ./amazed > /dev/null)
+    - name: clean
+      run : make fclean; rm ./test.txt
