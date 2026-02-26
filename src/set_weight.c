@@ -27,7 +27,7 @@ static void process_curr_room(amazed_room_t **queue, amazed_room_t *curr_room,
     for (node_t *neighboring = curr_room->linked_rooms->head; neighboring;
         neighboring = neighboring->next) {
         neighbor_room = (amazed_room_t *)neighboring->data;
-        if (!neighbor_room)
+        if (!neighbor_room || curr_room->type == START)
             continue;
         if (neighbor_room->weight < curr_room->weight - 1) {
             neighbor_room->weight = curr_room->weight - 1;
@@ -70,6 +70,8 @@ int set_weight(amazed_t *amazed)
         return ERROR_CODE;
     queue = malloc(sizeof(amazed_room_t *) * amazed->room_list->size);
     if (start_queuing(queue, amazed->room_list->size, end))
+        err = ERROR_CODE;
+    if (start->weight < 0)
         err = ERROR_CODE;
     start->weight = 0;
     safe_free(queue);
