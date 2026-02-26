@@ -51,7 +51,7 @@ static amazed_room_t *get_dest(amazed_room_t *room, int room_numbers)
     return dest;
 }
 
-static int move_robot(robot_t *robot, int total_room)
+static int move_robot(robot_t *robot, int total_room, int i)
 {
     amazed_room_t *dest = NULL;
 
@@ -65,7 +65,7 @@ static int move_robot(robot_t *robot, int total_room)
         robot->room->has_robot--;
         robot->room = dest;
         robot->room->has_robot++;
-        if (print_robot_move(robot->serial_number, robot->room->name) < 0)
+        if (print_robot_move(robot->serial_number, robot->room->name, i) < 0)
             return ERROR_CODE;
         return SUCCESS_CODE;
     }
@@ -75,6 +75,7 @@ static int move_robot(robot_t *robot, int total_room)
 int next_gen(amazed_t *amazed, robot_t **robots)
 {
     int r = 0;
+    int i = 0;
 
     if (!amazed || !robots)
         return ERROR_CODE;
@@ -82,7 +83,8 @@ int next_gen(amazed_t *amazed, robot_t **robots)
         if (!curr_robot || !(*curr_robot)->room ||
             (*curr_robot)->room->type == END)
             continue;
-        r = move_robot((*curr_robot), amazed->room_list->size);
+        r = move_robot((*curr_robot), amazed->room_list->size, i);
+        i++;
         if (r == ERROR_CODE)
             return ERROR_CODE;
         if (r == NO_MOVE_CODE)
