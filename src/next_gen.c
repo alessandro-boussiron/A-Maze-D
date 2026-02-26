@@ -23,14 +23,41 @@ static int bigger_weight(void *data)
     return casted_data->weight;
 }
 
-static int move_robot(robot_t *robot)
+static int bigger_weight_anyway(void *data)
+{
+    amazed_room_t *casted_data = (amazed_room_t *)data;
+
+    if (!data)
+        return 0;
+    return casted_data->weight;
+}
+
+static amazed_room_t *get_dest(amazed_room_t *room, int room_numbers)
+{
+    amazed_room_t *dest = NULL;
+
+    if (!room || !room->linked_rooms)
+        return NULL;
+    dest = room->linked_rooms->biggest(room->linked_rooms, bigger_weight);
+    if (!dest)
+        return room;
+    if (room->has_robot >= room_numbers - dest->weight
+        || room->type != START)
+        return dest;
+    dest = room->linked_rooms->biggest(room->linked_rooms,
+        bigger_weight_anyway);
+    if (!dest || dest->has_robot)
+        return room;
+    return dest;
+}
+
+static int move_robot(robot_t *robot, int total_room, int i)
 {
     amazed_room_t *dest = NULL;
 
     if (!robot || !robot->room || !robot->room->linked_rooms)
         return ERROR_CODE;
-    dest = robot->room->linked_rooms->biggest(robot->room->linked_rooms,
-        bigger_weight);
+    dest = get_dest(robot->room, total_room);
     if (!dest)
         return ERROR_CODE;
     if (robot->room->weight <= dest->weight && (!dest->has_robot ||
@@ -38,25 +65,30 @@ static int move_robot(robot_t *robot)
         robot->room->has_robot--;
         robot->room = dest;
         robot->room->has_robot++;
-        if (print_robot_move(robot->serial_number, robot->room->name) < 0)
+        if (print_robot_move(robot->serial_number, robot->room->name, i) < 0)
             return ERROR_CODE;
+        return SUCCESS_CODE;
     }
-    return SUCCESS_CODE;
+    return NO_MOVE_CODE;
 }
 
-int next_gen(amazed_t *amazed, linked_list_t *robots)
+int next_gen(amazed_t *amazed, robot_t **robots)
 {
-    robot_t *curr_robot = NULL;
+    int r = 0;
+    int i = 0;
 
     if (!amazed || !robots)
         return ERROR_CODE;
-    for (node_t *cur_robot_node = robots->head; cur_robot_node;
-        cur_robot_node = cur_robot_node->next) {
-        curr_robot = (robot_t *)cur_robot_node->data;
-        if (!curr_robot || !curr_robot->room || curr_robot->room->type == END)
+    for (robot_t **curr_robot = robots; *curr_robot; curr_robot++) {
+        if (!curr_robot || !(*curr_robot)->room ||
+            (*curr_robot)->room->type == END)
             continue;
-        if (move_robot(curr_robot))
+        r = move_robot((*curr_robot), amazed->room_list->size, i);
+        i++;
+        if (r == ERROR_CODE)
             return ERROR_CODE;
+        if (r == NO_MOVE_CODE)
+            break;
     }
     return SUCCESS_CODE;
 }

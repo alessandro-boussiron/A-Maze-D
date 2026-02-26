@@ -7,23 +7,20 @@
 #include "amazed.h"
 #include "my.h"
 
-static int launch_robots(amazed_t *amazed, linked_list_t *robots)
+static int launch_robots(amazed_t *amazed, robot_t **robots)
 {
     amazed_room_t *end = get_end_room(amazed);
-    size_t curr_gen = 0;
     int err = SUCCESS_CODE;
 
     if (!robots || !amazed || !end)
         return ERROR_CODE;
     while (end->has_robot != amazed->robots_count) {
-        if (curr_gen > 100 || next_gen(amazed, robots)) {
-            my_putstr("Error Occured.\n");
+        if (next_gen(amazed, robots)) {
             err = ERROR_CODE;
             break;
         }
         if (my_putstr("\n") < 0)
             return ERROR_CODE;
-        curr_gen++;
     }
     return err;
 }
@@ -43,19 +40,11 @@ static robot_t *make_new_robot(amazed_room_t *init_room, size_t serial)
     return new_robot;
 }
 
-static void destroy_robot(void *data)
-{
-    robot_t *robot = (robot_t *)data;
-
-    if (!data)
-        return;
-    free(robot);
-}
-
-static int init_robots(amazed_room_t *start, linked_list_t *robots,
+static int init_robots(amazed_room_t *start, robot_t **robots,
     size_t nb_robots)
 {
     robot_t *new_robot = NULL;
+    robot_t **robots_temp = robots;
 
     if (!robots || !start)
         return ERROR_CODE;
@@ -66,14 +55,17 @@ static int init_robots(amazed_room_t *start, linked_list_t *robots,
         new_robot = make_new_robot(start, robot_added + 1);
         if (!new_robot)
             return ERROR_CODE;
-        PUSH_END(robots, new_robot);
+        *robots = new_robot;
+        robots++;
     }
+    *robots = NULL;
+    robots = robots_temp;
     return SUCCESS_CODE;
 }
 
 int solve_maze(amazed_t *amazed)
 {
-    linked_list_t *robots = NULL;
+    robot_t **robots = NULL;
     amazed_room_t *start = get_start_room(amazed);
     int err = SUCCESS_CODE;
 
@@ -81,13 +73,15 @@ int solve_maze(amazed_t *amazed)
         return ERROR_CODE;
     if (set_weight(amazed))
         return ERROR_CODE;
-    robots = linked_list_create();
+    robots = malloc(sizeof(robot_t *) * (amazed->robots_count + 1));
     if (!robots)
         return ERROR_CODE;
-    robots->set_dstr(robots, destroy_robot);
     if (init_robots(start, robots, amazed->robots_count) ||
         launch_robots(amazed, robots))
         err = ERROR_CODE;
-    robots->destroy(&robots);
+    for (int robots_dstr = 0; robots_dstr <= amazed->robots_count;
+        robots_dstr++)
+        free(robots[robots_dstr]);
+    free(robots);
     return err;
 }

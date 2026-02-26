@@ -62,14 +62,16 @@ static int start_queuing(amazed_room_t **queue, size_t nb_rooms,
 int set_weight(amazed_t *amazed)
 {
     amazed_room_t *end = get_end_room(amazed);
+    amazed_room_t *start = get_start_room(amazed);
     amazed_room_t **queue = NULL;
     int err = SUCCESS_CODE;
 
-    if (!amazed || !amazed->room_list || !end)
+    if (!amazed || !amazed->room_list || !end || !start)
         return ERROR_CODE;
     queue = malloc(sizeof(amazed_room_t *) * amazed->room_list->size);
     if (start_queuing(queue, amazed->room_list->size, end))
         err = ERROR_CODE;
+    start->weight = 0;
     safe_free(queue);
     return err;
 }

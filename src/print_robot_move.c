@@ -7,9 +7,11 @@
 #include "../include/my.h"
 #include <unistd.h>
 
-int print_robot_move(int robot_number, char *room_number)
+int print_robot_move(int robot_number, char *room_number, int index)
 {
     if (!room_number)
+        return ERROR_CODE;
+    if (index != 0 && write(1, " ", 1) != 1)
         return ERROR_CODE;
     if (write(1, "P", 1) != 1)
         return ERROR_CODE;
@@ -18,8 +20,6 @@ int print_robot_move(int robot_number, char *room_number)
     if (write(1, "-", 1) != 1)
         return ERROR_CODE;
     if (my_putstr(room_number) < 0)
-        return ERROR_CODE;
-    if (write(1, " ", 1) != 1)
         return ERROR_CODE;
     return SUCCESS_CODE;
 }
