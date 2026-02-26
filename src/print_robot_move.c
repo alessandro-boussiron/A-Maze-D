@@ -9,6 +9,8 @@
 
 int print_robot_move(int robot_number, char *room_number, int index)
 {
+    if (!room_number)
+        return ERROR_CODE;
     if (index != 0 && write(1, " ", 1) != 1)
         return ERROR_CODE;
     if (write(1, "P", 1) != 1)
