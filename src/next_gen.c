@@ -69,7 +69,9 @@ static int move_robot(robot_t *robot, int total_room, int i)
             return ERROR_CODE;
         return SUCCESS_CODE;
     }
-    return NO_MOVE_CODE;
+    if (robot->room->type == START)
+        return NO_MOVE_CODE;
+    return SUCCESS_CODE;
 }
 
 int next_gen(amazed_t *amazed, robot_t **robots)
