@@ -59,7 +59,8 @@ static char **get_next_command(int *error)
     if (getline(&buffer, &buff_size, stdin) < 0 || !buffer)
         return error_return(NULL, buffer);
     buff_size = (size_t)my_strlen(buffer);
-    buffer[buff_size - 1] = '\0';
+    buffer[buff_size - 1] = (buffer[buff_size - 1] == '\n') ? '\0' :
+        buffer[buff_size - 1];
     if (!(*buffer))
         return error_return(NULL, buffer);
     if (!is_valid_buffer(buffer))
