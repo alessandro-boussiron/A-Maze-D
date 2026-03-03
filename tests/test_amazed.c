@@ -270,8 +270,8 @@ Test(set_tunnels, basic) {
 
     cr_assert_not_null(amazed->room_list->head->data);
     cr_assert(get_tunnel(tunnel0, &amazed) == 0);
-    cr_assert(get_tunnel(tunnel1, &amazed) == 1);
-    cr_assert(get_tunnel(tunnel2, &amazed) == 1);
+    cr_assert(get_tunnel(tunnel1, &amazed));
+    cr_assert(get_tunnel(tunnel2, &amazed));
     cr_assert(get_tunnel(NULL, &amazed) == 1);
     cr_assert(get_tunnel(tunnel0, NULL) == 1);
     cr_assert(get_tunnel(NULL, NULL) == 1);

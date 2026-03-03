@@ -58,7 +58,8 @@ int link_two_rooms(linked_list_t *ll, char *roomname1, char *roomname2)
     amazed_room_t *room1 = NULL;
     amazed_room_t *room2 = NULL;
 
-    if (!ll || ll->size < 2)
+    if (!ll || ll->size < 2 || !roomname1 ||
+        !roomname2 || !(*roomname1) || !(*roomname2))
         return ERROR_CODE;
     if (my_strcmp(roomname1, roomname2) == 0)
         return SUCCESS_CODE;
